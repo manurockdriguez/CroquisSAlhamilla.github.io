@@ -2,75 +2,28 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Croquis Boulder Sierra Alhamilla</title>
 
 <style>
-body{
-    margin:0;
-    background:#f0f0f0;
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
-h1{
-    text-align:center;
-    padding:20px;
-    margin:0;
-}
-
-#pdf-container{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
-canvas{
-    width:100%;
-    max-width:1200px;
-    height:auto;
-    margin-bottom:10px;
+iframe {
+    width: 100%;
+    height: 100vh;
+    border: none;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Croquis Boulder Sierra Alhamilla</h1>
-
-<div id="pdf-container"></div>
-
-<script type="module">
-
-import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs";
-
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
-
-const pdf = await pdfjsLib.getDocument("croquis.pdf").promise;
-
-const container = document.getElementById("pdf-container");
-
-for(let i = 1; i <= pdf.numPages; i++){
-
-    const page = await pdf.getPage(i);
-
-    const viewport = page.getViewport({ scale: 2 });
-
-    const canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d");
-
-    canvas.width = viewport.width;
-    canvas.height = viewport.height;
-
-    container.appendChild(canvas);
-
-    await page.render({
-        canvasContext: context,
-        viewport: viewport
-    }).promise;
-}
-
-</script>
+<iframe src="croquis.pdf"></iframe>
 
 </body>
 </html>
